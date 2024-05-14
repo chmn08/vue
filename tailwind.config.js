@@ -5,6 +5,7 @@ module.exports = {
       colors: {
         "sonic-primary": "#6DBAA1",
         "sonic-secondary": "#004E71",
+        "btn-hover":"#67c2a4"
       },
     },
     fontFamily: {

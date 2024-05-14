@@ -1,7 +1,5 @@
 // store.ts
-import router from '@/router';
 import { createStore } from 'vuex';
-import { useToast } from "vue-toast-notification";
 
 interface User {
   id: number;
@@ -30,10 +28,9 @@ const store = createStore<AuthState>({
     },
   },
   actions: {
-    async login({ commit }, credentials: { username: string; password: string }) {
-      const $toast = useToast();
+    async login({ commit }, credentials: { name: string; password: string }) {
       try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('http://localhost:3000/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -43,9 +40,9 @@ const store = createStore<AuthState>({
         if (response.ok) {
           const user: User = await response.json();
           commit('setUser', user);
-          router.push('/user');
         } else {
-          $toast.error("Login failed.");
+          // Handle login error
+          console.error('Login failed');
         }
       } catch (error) {
         console.error('Login error:', error);
@@ -53,8 +50,8 @@ const store = createStore<AuthState>({
     },
     logout({ commit }) {
       commit('logout');
-      router.push('/login');
     },
   },
 });
+
 export default store;

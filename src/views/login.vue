@@ -1,60 +1,63 @@
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <!-- Your existing HTML code -->
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <div class="space-y-6">
+  <div
+    class="h-full bg-gradient-to-tl from-green-400 to-indigo-900 w-full py-1 px-8"
+  >
+    <div class="flex flex-col items-center justify-center">
+      <div class="bg-white shadow rounded lg:w-1/3 md:w-1/2 w-full p-10 mt-16">
+        <p
+          tabindex="0"
+          class="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800"
+        >
+          Login to your account
+        </p>
+        <p
+          tabindex="0"
+          class="focus:outline-none text-sm mt-4 font-medium leading-none text-gray-500"
+        >
+          Dont have account?
+          <a
+            class="hover:text-gray-500 focus:text-gray-500 focus:outline-none focus:underline hover:underline text-sm font-medium leading-none text-gray-800 cursor-pointer"
+          >
+            Sign up here</a
+          >
+        </p>
         <div>
           <label
-            for="email"
-            class="block text-sm font-medium leading-6 text-sonic-primary"
-            >Email address</label
+            id="email"
+            class="text-sm font-medium leading-none text-gray-800"
           >
-          <div class="mt-2">
-            <input
-              v-model="email"
-              id="email"
-              name="email"
-              type="email"
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-          </div>
+            Email
+          </label>
+          <input
+            v-model="email"
+            aria-labelledby="email"
+            type="email"
+            class="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+          />
         </div>
-
-        <div>
-          <div class="flex items-center justify-between">
-            <label
-              for="password"
-              class="block text-sm font-medium leading-6 text-sonic-primary"
-              >Password</label
-            >
-            <div class="text-sm">
-              <a
-                href="#"
-                class="font-semibold text-sonic-primary hover:text-indigo-500"
-                >Forgot password?</a
-              >
-            </div>
-          </div>
-          <div class="mt-2">
+        <div class="mt-6 w-full">
+          <label
+            for="pass"
+            class="text-sm font-medium leading-none text-gray-800"
+          >
+            Password
+          </label>
+          <div class="relative flex items-center justify-center">
             <input
               v-model="password"
-              id="password"
-              name="password"
+              id="pass"
               type="password"
-              autocomplete="current-password"
-              required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
             />
           </div>
         </div>
-
-        <div>
+        <div class="mt-8">
           <button
-            @click="login"
-            type="button"
-            class="flex w-full justify-center rounded-md bg-sonic-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            v-on:click="login"
+            role="button"
+            class="text-sm font-semibold leading-none text-white focus:outline-none bg-sonic-primary border rounded py-4 w-full"
           >
-            Sign in
+            Login
           </button>
         </div>
       </div>
@@ -62,25 +65,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import router from "../router/index";
-export default class Login extends Vue {
-  email: string = "";
-  password: string = "";
+<script setup lang="ts">
+import { ref } from "vue";
+import { useStore } from "vuex";
 
-  login() {
-    if (!this.email || !this.password) {
-      alert("Please enter both email and password.");
-      return;
-    }
-    if (this.email == "yolo" && this.password == "123") {
-    }
-    console.log("Email:", this.email);
-    console.log("Password:", this.password);
+const store = useStore();
 
-    this.email = "";
-    this.password = "";
-  }
-}
+const email = ref("example@soundpaysqq.com");
+const password = ref("P@ssw0rd");
+
+const login = () => {
+  store.dispatch("login", {
+    username: email.value,
+    password: password.value,
+  });
+};
 </script>
